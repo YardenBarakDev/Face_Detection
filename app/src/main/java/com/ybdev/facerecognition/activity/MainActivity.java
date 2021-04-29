@@ -118,10 +118,6 @@ public class MainActivity extends AppCompatActivity {
 
             sortArray(outputFeature0.getFloatArray());
 
-
-
-
-
             SsdMobilenetV11Metadata1 ssdMobilenetV11Metadata1 = SsdMobilenetV11Metadata1.newInstance(this);
 
             // Creates inputs for reference.
@@ -131,12 +127,8 @@ public class MainActivity extends AppCompatActivity {
             // Runs model inference and gets result.
             SsdMobilenetV11Metadata1.Outputs outputs2 = ssdMobilenetV11Metadata1.process(image);
             TensorBuffer locations = outputs2.getLocationsAsTensorBuffer();
-            TensorBuffer classes = outputs2.getClassesAsTensorBuffer();
-            TensorBuffer scores = outputs2.getScoresAsTensorBuffer();
 
             findDetection(locations.getFloatArray(), outputFeature0.getFloatArray(), resizeImage);
-
-
 
             // Releases model resources if no longer used.
             model.close();
@@ -229,34 +221,4 @@ public class MainActivity extends AppCompatActivity {
         }
         Main_IMG.setImageBitmap(photo);
     }
-
 }
-
-/*
- private void detectImage(){
-        Bitmap image = ((BitmapDrawable) Main_IMG.getDrawable()).getBitmap();
-
-        Bitmap resizeImage = Bitmap.createScaledBitmap(image, 224,224,true);
-        try {
-            MobilenetV110224Quant model = MobilenetV110224Quant.newInstance(this);
-
-            // Creates inputs for reference.
-            TensorBuffer inputFeature0 = TensorBuffer.createFixedSize(new int[]{1, 224, 224, 3}, DataType.UINT8);
-
-            TensorImage selectImage = TensorImage.fromBitmap(resizeImage);
-
-            ByteBuffer byteBuffer = selectImage.getBuffer();
-            inputFeature0.loadBuffer(byteBuffer);
-
-            // Runs model inference and gets result.
-            MobilenetV110224Quant.Outputs outputs = model.process(inputFeature0);
-            TensorBuffer outputFeature0 = outputs.getOutputFeature0AsTensorBuffer();
-
-            sortArray(outputFeature0.getFloatArray());
-            // Releases model resources if no longer used.
-            model.close();
-        } catch (IOException e) {
-            // TODO Handle the exception
-        }
-    }
- */
